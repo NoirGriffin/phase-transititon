@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="An interactive research translation exploring word frequency, Zipf’s law, communication costs, and coding theory through three connected papers.">
+  <meta property="og:title" content="The Negotiation of Language. for Phase Transition 2026">
+  <meta property="og:description" content="Explore how word-frequency patterns connect to communication, coding, and compression in an interactive visual story.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#121b26">
+  <title>The Negotiation of Language.Phase Transition 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <section id="intro-screen" class="intro-screen" aria-labelledby="intro-title">
+    <div class="intro-orbit intro-orbit-one" aria-hidden="true"></div>
+    <div class="intro-orbit intro-orbit-two" aria-hidden="true"></div>
+    <div class="intro-orbit intro-orbit-three" aria-hidden="true"></div>
+    <div class="intro-content">
+      <h1 id="intro-title">The Negotiation of Language</h1>
+      <p id="intro-subtitle" class="intro-subtitle">A research translation project created for Phase Transition 2026</p>
+      <button id="start-experience" class="start-button" type="button" disabled aria-describedby="intro-subtitle">Start</button>
+      <span id="intro-ready-status" class="sr-only" aria-live="polite">Start is not available yet.</span>
+    </div>
+  </section>
+
+  <div id="experience-app" class="experience-app" inert>
+    <a class="skip-link" href="#word-entry">Skip to the passage input</a>
+
+    <header class="experience-chrome">
+      <div class="brand-lockup">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <p class="brand-kicker">AN INTERACTIVE RESEARCH TRANSLATION</p>
+          <p class="brand-title">THE NEGOTIATION OF LANGUAGE</p>
+        </div>
+      </div>
+      <div class="scene-meta">
+        <span class="meta-label">STORY PROGRESS</span>
+        <span class="scene-count" id="scene-count">01 / 11</span>
+        <div class="progress-track" role="progressbar" aria-label="Story progress" aria-valuemin="1" aria-valuemax="11" aria-valuenow="1">
+          <span id="scene-progress"></span>
+        </div>
+      </div>
+      <details id="audio-menu" class="audio-menu">
+        <summary id="audio-menu-trigger" aria-label="Audio settings. Ambient music off, scene cues on.">
+          <span>Audio</span>
+          <span id="audio-menu-status">Music off</span>
+        </summary>
+        <div class="audio-panel" role="group" aria-labelledby="audio-panel-title">
+          <p id="audio-panel-title" class="audio-panel-title">Sound settings</p>
+          <p class="audio-panel-copy">Music starts only when you choose. cues accompany scene changes.</p>
+          <button id="ambient-toggle" class="audio-action" type="button" aria-label="Ambient music" aria-pressed="false">
+            <span>Ambient music</span><span id="ambient-state">Off</span>
+          </button>
+          <label class="audio-volume-label" for="music-volume">
+            <span>Music level</span><output id="music-volume-output" for="music-volume">8%</output>
+          </label>
+          <input id="music-volume" class="audio-volume" type="range" min="0" max="0.16" step="0.01" value="0.08" aria-label="Ambient music volume">
+          <button id="cue-toggle" class="audio-action" type="button" aria-label="Scene transition cues" aria-pressed="true">
+            <span>Scene cues</span><span id="cue-state">On</span>
+          </button>
+          <p class="audio-credit">“Dimly lit” by iamoneabe · <a href="https://opengameart.org/content/dimly-lit" target="_blank" rel="noreferrer">CC0 / OpenGameArt</a></p>
+        </div>
+      </details>
+      <audio id="ambient-music" loop preload="none" aria-hidden="true">
+        <source src="audio/dimlylit.mp3" type="audio/mpeg">
+      </audio>
+      <p id="audio-live-region" class="sr-only" role="status" aria-live="polite"></p>
+      <nav class="story-navigation" aria-label="Experience navigation">
+        <button id="previous-scene" class="nav-button nav-button-secondary" type="button" aria-label="Previous scene" aria-keyshortcuts="ArrowLeft" disabled>← <span class="sr-only">Previous</span></button>
+        <button id="next-scene" class="nav-button nav-button-primary" type="button" aria-keyshortcuts="ArrowRight" disabled>Reveal the pattern</button>
+        <span class="navigation-hint" aria-hidden="true">← → TO MOVE</span>
+        <button id="replay-experience" class="nav-button nav-button-primary" type="button" hidden>Replay</button>
+      </nav>
+    </header>
+
+    <main id="experience-stage" class="experience-workspace">
+      <section id="visual-stage" class="visual-stage" aria-label="Interactive visualization">
+        <section class="entry-guidance" id="entry-guidance" aria-label="Writing prompt">
+          <div class="entry-guidance-heading">
+            <label id="word-entry-label" for="word-entry">Start with a passage</label>
+            <output id="word-count-visible" aria-hidden="true">0 / 30 words</output>
+          </div>
+          <p class="entry-guidance-copy">Write something yourself, or copy and paste any passage in English. The sample is over 500 words if you would rather explore without typing it all.</p>
+          <div class="entry-guidance-footer">
+            <button id="sample-text-button" class="sample-text-button" type="button" title="Fill the input with the 500-plus-word sample">Use the 500+ word sample</button>
+            <span class="privacy-note">30+ words · up to 6,000 characters · stays in this browser</span>
+          </div>
+        </section>
+        <p class="sr-only" id="word-entry-help">Type or paste at least 30 words in English, or use the sample of more than 500 words. Up to 6,000 characters. Your text is analyzed in this browser and cleared when you replay.</p>
+        <textarea id="word-entry" maxlength="6000" rows="7" placeholder="Write or paste any passage in English…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-labelledby="word-entry-label" aria-describedby="word-entry-help word-count-status"></textarea>
+        <p id="word-count-status" class="sr-only" aria-live="polite">0 words entered. 30 more words needed. 0 of 6,000 characters used.</p>
+
+        <section id="slider-panel" class="slider-panel" aria-label="Speaker and listener balance" hidden>
+          <div class="slider-heading">
+            <label for="lambda-input">Balance parameter <span aria-hidden="true">λ</span></label>
+            <output id="lambda-output" for="lambda-input">0.00</output>
+          </div>
+          <input id="lambda-input" type="range" min="0" max="1" step="0.01" value="0" aria-label="Balance between speaker and listener" aria-describedby="slider-guidance" aria-valuetext="Lambda 0.00">
+          <div class="slider-endpoints" aria-hidden="true"><span>Speaker effort</span><span>Listener effort</span></div>
+          <p id="slider-guidance" class="slider-guidance">Move into the illustrative transition band to unlock Continue.</p>
+        </section>
+      </section>
+
+      <aside class="story-panel" aria-labelledby="scene-heading">
+        <div class="story-panel-content">
+          <p id="stage-kicker" class="stage-kicker">01 · YOUR TEXT</p>
+          <h2 id="scene-heading">Begin with a passage</h2>
+          <p id="scene-summary" class="scene-summary"></p>
+          <div class="panel-rule" aria-hidden="true"></div>
+          <p id="scene-body" class="scene-body"></p>
+          <p id="scene-callout" class="scene-callout" hidden></p>
+          <details id="research-map" class="research-map" hidden>
+            <summary id="research-map-summary">How the papers connect</summary>
+            <p id="research-map-intro" class="research-map-intro"></p>
+            <ol id="research-map-steps" class="research-map-steps"></ol>
+          </details>
+          <section id="source-section" class="source-section" aria-labelledby="source-heading" hidden>
+            <h3 id="source-heading">Read the source</h3>
+            <ul id="scene-citations" class="scene-citations"></ul>
+          </section>
+        </div>
+        <div class="story-panel-footer">
+          <span>PHASE TRANSITION 2026</span>
+          <span>THE NEGOTIATION OF LANGUAGE</span>
+        </div>
+      </aside>
+
+      <p id="scene-description" class="sr-only"></p>
+      <div id="live-region" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js" crossorigin="anonymous"></script>
+  <script src="story-content.js"></script>
+  <script src="globals.js"></script>
+  <script src="helpers.js"></script>
+  <script src="animations.js"></script>
+  <script src="scenes-early.js"></script>
+  <script src="scenes-late.js"></script>
+  <script src="controls.js"></script>
+</body>
+</html>

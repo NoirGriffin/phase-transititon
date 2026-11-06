@@ -1,0 +1,15 @@
+THE NEGOTIATION OF LANGUAGE — EDITABLE WEBSITE
+
+Start with story-content.js to update research information and wording.
+
+• scenes: screen titles, summaries, main text, callouts, and citation IDs
+• references: source details and links; keep each scene's citation IDs in sync
+• sampleText: the passage used by the sample button
+• researchMap: the timeline connecting the three papers
+• visualCopy, languageEvidence, comparisonExamples, and laws: chart labels, reported figures, and illustrative data
+
+Keep the JavaScript object structure, quotation marks, commas, and braces intact. Some strings use placeholders such as {languageCount} and {languageShare}; keep those tokens when editing the surrounding sentence.
+
+Edit styles.css to change colors, typography, spacing, and layout. Edit index.html to change page structure. The other JavaScript files control animation, scene transitions, and interaction behavior.
+
+To preview, open index.html in a current browser. The page loads p5.js, anime.js, and Google Fonts from their CDNs, so an internet connection is needed for the visualizations and custom fonts. The ambient audio file is included locally in audio/.
